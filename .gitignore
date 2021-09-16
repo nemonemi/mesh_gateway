@@ -1,0 +1,9 @@
+schema.graphql
+generated
+node_modules
+playground
+
+/**/.idea/**
+/**/!.idea/watcherTasks.xml
+/**/!.idea/prettier.xml
+/**/!.idea/runConfigurations/**
