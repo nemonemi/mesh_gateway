@@ -4,16 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -w **/* --exec mesh dev",
-    "generate-types": "mesh build"
+    "server": "mesh dev --dir src/bd/api",
+    "start": "nodemon -w /src/bd/api/src --exec yarn server",
+    "generate-types": "mesh --dir src/bd/api/ build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@graphql-mesh/cli": "0.38.1",
-    "@graphql-mesh/graphql": "0.18.10",
-    "@graphql-mesh/runtime": "0.20.0",
-    "@graphql-mesh/transform-mock": "0.10.11",
+    "@graphql-mesh/cli": "0.38.4",
+    "@graphql-mesh/graphql": "0.18.12",
+    "@graphql-mesh/transform-mock": "0.10.13",
     "@types/faker": "5.5.6",
     "faker": "5.5.3",
     "graphql": "15.5.0"

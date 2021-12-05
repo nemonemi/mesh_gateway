@@ -1,0 +1,12 @@
+{
+  "name": "Gateway",
+  "schemaPath": "mock-schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "CMBE": {
+        "url": "http://localhost:4000",
+        "introspect": true
+      }
+    }
+  }
+}

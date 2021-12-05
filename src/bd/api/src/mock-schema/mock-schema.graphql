@@ -1,0 +1,29 @@
+type Query {
+  authors: [ExistingAuthor!]!
+  author(id: ID!): ExistingAuthorResult!
+  authorPerhaps(id: ID!): ExistingAuthorResult!
+}
+
+
+type ExistingAuthor {
+  id: ID!
+  name: String!
+  type: AuthorType!
+  created_at: DateTime
+  registration_number: String
+}
+
+union ExistingAuthorResult = ExistingAuthor | AuthorDoesNotExistError
+
+type AuthorDoesNotExistError {
+  message: String!
+}
+
+type AuthorType {
+  id: ID!
+  name: String!
+  version: String
+}
+
+# Scalars
+scalar DateTime
