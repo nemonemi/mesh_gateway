@@ -8,6 +8,7 @@ import ExternalModule_2 from '@graphql-mesh/graphql';
 import ExternalModule_3 from '@graphql-mesh/transform-mock';
 import ExternalModule_4 from '@graphql-mesh/merger-bare';
 import ExternalModule_5 from './../../../resolvers/authors.query.ts';
+import ExternalModule_6 from './../../../resolvers/authors.mutation.ts';
 const importedModules = {
     // @ts-ignore
     ["ts-node/register/transpile-only"]: ExternalModule_0,
@@ -20,7 +21,9 @@ const importedModules = {
     // @ts-ignore
     ["@graphql-mesh/merger-bare"]: ExternalModule_4,
     // @ts-ignore
-    ["../../resolvers/authors.query.ts"]: ExternalModule_5
+    ["../../resolvers/authors.query.ts"]: ExternalModule_5,
+    // @ts-ignore
+    ["../../resolvers/authors.mutation.ts"]: ExternalModule_6
 };
 const baseDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const syncImportFn = (moduleId) => {
@@ -47,7 +50,7 @@ import GraphqlHandler from '@graphql-mesh/graphql';
 import MockTransform from '@graphql-mesh/transform-mock';
 import BareMerger from '@graphql-mesh/merger-bare';
 import { resolveAdditionalResolvers } from '@graphql-mesh/utils';
-export const rawConfig = { "sources": [{ "name": "Authors", "handler": { "graphql": { "endpoint": "./src/mock-schema/mock-schema.graphql" } } }], "transforms": [{ "mock": { "if": true, "initializeStore": "./src/resolvers/authors.query.ts#initializeStore", "mocks": [{ "apply": "Query.author", "custom": "./src/resolvers/authors.query.ts#author" }] } }], "require": ["ts-node/register/transpile-only"], "serve": { "port": 4000, "cors": { "origin": "http://localhost:3000" }, "playground": true } };
+export const rawConfig = { "sources": [{ "name": "Authors", "handler": { "graphql": { "endpoint": "./src/mock-schema/mock-schema.graphql" } } }], "transforms": [{ "mock": { "if": true, "initializeStore": "./src/resolvers/authors.query.ts#initializeStore", "mocks": [{ "apply": "Query.author", "custom": "./src/resolvers/authors.query.ts#author" }, { "apply": "Mutation.uploadFile", "custom": "./src/resolvers/authors.mutation.ts#uploadFile" }, { "apply": "Mutation.uploadFileWithUnion", "custom": "./src/resolvers/authors.mutation.ts#uploadFileWithUnion" }] } }], "require": ["ts-node/register/transpile-only"], "serve": { "port": 4000, "cors": { "origin": "http://localhost:3000" }, "playground": true, "browser": false } };
 export async function getMeshOptions() {
     const cache = new MeshCache({
         ...(rawConfig.cache || {}),

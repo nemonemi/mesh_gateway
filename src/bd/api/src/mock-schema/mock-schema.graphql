@@ -4,13 +4,23 @@ type Query {
   authorPerhaps(id: ID!): ExistingAuthorResult!
 }
 
+type Mutation {
+  uploadFile: UploadFile
+  uploadFileWithUnion(value: String): UploadFileResult
+}
+
+
+union UploadFileResult = UploadFile | WrongFileTypeError
+type UploadFile {
+  fileID: ID!
+}
+type WrongFileTypeError {
+  message: String!
+}
 
 type ExistingAuthor {
   id: ID!
   name: String!
-  type: AuthorType!
-  created_at: DateTime
-  registration_number: String
 }
 
 union ExistingAuthorResult = ExistingAuthor | AuthorDoesNotExistError

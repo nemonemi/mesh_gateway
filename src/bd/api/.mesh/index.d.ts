@@ -28,7 +28,7 @@ export declare type Scalars = {
 };
 export declare type Query = {
     authors: Array<ExistingAuthor>;
-    author: ExistingAuthor;
+    author: ExistingAuthorResult;
     authorPerhaps: ExistingAuthorResult;
 };
 export declare type QueryauthorArgs = {
@@ -37,27 +37,27 @@ export declare type QueryauthorArgs = {
 export declare type QueryauthorPerhapsArgs = {
     id: Scalars['ID'];
 };
-export declare type AuthorModel = {
-    id: Scalars['ID'];
-    name: Scalars['String'];
-    type: AuthorType;
-    created_at?: Maybe<Scalars['DateTime']>;
+export declare type Mutation = {
+    uploadFile?: Maybe<UploadFile>;
+    uploadFileWithUnion?: Maybe<UploadFileResult>;
 };
-export declare type ExistingAuthor = AuthorModel & {
+export declare type MutationuploadFileWithUnionArgs = {
+    value?: Maybe<Scalars['String']>;
+};
+export declare type UploadFileResult = UploadFile | WrongFileTypeError;
+export declare type UploadFile = {
+    fileID: Scalars['ID'];
+};
+export declare type WrongFileTypeError = {
+    message: Scalars['String'];
+};
+export declare type ExistingAuthor = {
     id: Scalars['ID'];
     name: Scalars['String'];
-    type: AuthorType;
-    created_at?: Maybe<Scalars['DateTime']>;
-    registration_number?: Maybe<Scalars['String']>;
 };
 export declare type ExistingAuthorResult = ExistingAuthor | AuthorDoesNotExistError;
 export declare type AuthorDoesNotExistError = {
     message: Scalars['String'];
-};
-export declare type User = {
-    id: Scalars['ID'];
-    first_name?: Maybe<Scalars['String']>;
-    last_name?: Maybe<Scalars['String']>;
 };
 export declare type AuthorType = {
     id: Scalars['ID'];
@@ -96,12 +96,14 @@ export declare type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {
 export declare type ResolversTypes = ResolversObject<{
     Query: ResolverTypeWrapper<{}>;
     ID: ResolverTypeWrapper<Scalars['ID']>;
-    AuthorModel: ResolversTypes['ExistingAuthor'];
+    Mutation: ResolverTypeWrapper<{}>;
     String: ResolverTypeWrapper<Scalars['String']>;
+    UploadFileResult: ResolversTypes['UploadFile'] | ResolversTypes['WrongFileTypeError'];
+    UploadFile: ResolverTypeWrapper<UploadFile>;
+    WrongFileTypeError: ResolverTypeWrapper<WrongFileTypeError>;
     ExistingAuthor: ResolverTypeWrapper<ExistingAuthor>;
     ExistingAuthorResult: ResolversTypes['ExistingAuthor'] | ResolversTypes['AuthorDoesNotExistError'];
     AuthorDoesNotExistError: ResolverTypeWrapper<AuthorDoesNotExistError>;
-    User: ResolverTypeWrapper<User>;
     AuthorType: ResolverTypeWrapper<AuthorType>;
     DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -110,34 +112,41 @@ export declare type ResolversTypes = ResolversObject<{
 export declare type ResolversParentTypes = ResolversObject<{
     Query: {};
     ID: Scalars['ID'];
-    AuthorModel: ResolversParentTypes['ExistingAuthor'];
+    Mutation: {};
     String: Scalars['String'];
+    UploadFileResult: ResolversParentTypes['UploadFile'] | ResolversParentTypes['WrongFileTypeError'];
+    UploadFile: UploadFile;
+    WrongFileTypeError: WrongFileTypeError;
     ExistingAuthor: ExistingAuthor;
     ExistingAuthorResult: ResolversParentTypes['ExistingAuthor'] | ResolversParentTypes['AuthorDoesNotExistError'];
     AuthorDoesNotExistError: AuthorDoesNotExistError;
-    User: User;
     AuthorType: AuthorType;
     DateTime: Scalars['DateTime'];
     Boolean: Scalars['Boolean'];
 }>;
 export declare type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
     authors?: Resolver<Array<ResolversTypes['ExistingAuthor']>, ParentType, ContextType>;
-    author?: Resolver<ResolversTypes['ExistingAuthor'], ParentType, ContextType, RequireFields<QueryauthorArgs, 'id'>>;
+    author?: Resolver<ResolversTypes['ExistingAuthorResult'], ParentType, ContextType, RequireFields<QueryauthorArgs, 'id'>>;
     authorPerhaps?: Resolver<ResolversTypes['ExistingAuthorResult'], ParentType, ContextType, RequireFields<QueryauthorPerhapsArgs, 'id'>>;
 }>;
-export declare type AuthorModelResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['AuthorModel'] = ResolversParentTypes['AuthorModel']> = ResolversObject<{
-    __resolveType: TypeResolveFn<'ExistingAuthor', ParentType, ContextType>;
-    id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    type?: Resolver<ResolversTypes['AuthorType'], ParentType, ContextType>;
-    created_at?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+export declare type MutationResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+    uploadFile?: Resolver<Maybe<ResolversTypes['UploadFile']>, ParentType, ContextType>;
+    uploadFileWithUnion?: Resolver<Maybe<ResolversTypes['UploadFileResult']>, ParentType, ContextType, RequireFields<MutationuploadFileWithUnionArgs, never>>;
+}>;
+export declare type UploadFileResultResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['UploadFileResult'] = ResolversParentTypes['UploadFileResult']> = ResolversObject<{
+    __resolveType: TypeResolveFn<'UploadFile' | 'WrongFileTypeError', ParentType, ContextType>;
+}>;
+export declare type UploadFileResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['UploadFile'] = ResolversParentTypes['UploadFile']> = ResolversObject<{
+    fileID?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+export declare type WrongFileTypeErrorResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['WrongFileTypeError'] = ResolversParentTypes['WrongFileTypeError']> = ResolversObject<{
+    message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 export declare type ExistingAuthorResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ExistingAuthor'] = ResolversParentTypes['ExistingAuthor']> = ResolversObject<{
     id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    type?: Resolver<ResolversTypes['AuthorType'], ParentType, ContextType>;
-    created_at?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-    registration_number?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 export declare type ExistingAuthorResultResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ExistingAuthorResult'] = ResolversParentTypes['ExistingAuthorResult']> = ResolversObject<{
@@ -145,12 +154,6 @@ export declare type ExistingAuthorResultResolvers<ContextType = MeshContext, Par
 }>;
 export declare type AuthorDoesNotExistErrorResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['AuthorDoesNotExistError'] = ResolversParentTypes['AuthorDoesNotExistError']> = ResolversObject<{
     message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-export declare type UserResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
-    id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-    first_name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-    last_name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 export declare type AuthorTypeResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['AuthorType'] = ResolversParentTypes['AuthorType']> = ResolversObject<{
@@ -164,11 +167,13 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 export declare type Resolvers<ContextType = MeshContext> = ResolversObject<{
     Query?: QueryResolvers<ContextType>;
-    AuthorModel?: AuthorModelResolvers<ContextType>;
+    Mutation?: MutationResolvers<ContextType>;
+    UploadFileResult?: UploadFileResultResolvers<ContextType>;
+    UploadFile?: UploadFileResolvers<ContextType>;
+    WrongFileTypeError?: WrongFileTypeErrorResolvers<ContextType>;
     ExistingAuthor?: ExistingAuthorResolvers<ContextType>;
     ExistingAuthorResult?: ExistingAuthorResultResolvers<ContextType>;
     AuthorDoesNotExistError?: AuthorDoesNotExistErrorResolvers<ContextType>;
-    User?: UserResolvers<ContextType>;
     AuthorType?: AuthorTypeResolvers<ContextType>;
     DateTime?: GraphQLScalarType;
 }>;
@@ -179,7 +184,10 @@ export declare type QueryAuthorsSdk = {
     author: InContextSdkMethod<Query['author'], QueryauthorArgs, MeshContext>;
     authorPerhaps: InContextSdkMethod<Query['authorPerhaps'], QueryauthorPerhapsArgs, MeshContext>;
 };
-export declare type MutationAuthorsSdk = {};
+export declare type MutationAuthorsSdk = {
+    uploadFile: InContextSdkMethod<Mutation['uploadFile'], {}, MeshContext>;
+    uploadFileWithUnion: InContextSdkMethod<Mutation['uploadFileWithUnion'], MutationuploadFileWithUnionArgs, MeshContext>;
+};
 export declare type SubscriptionAuthorsSdk = {};
 export declare type AuthorsContext = {
     ["Authors"]: {

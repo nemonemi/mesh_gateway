@@ -1,5 +1,5 @@
 import { authors } from "./modules/authors";
-import {ExistingAuthor} from "../../.mesh";
+import type {ExistingAuthor} from "../../.mesh";
 
 export default {
   initializeStore: (storeInitializer: any) => {
@@ -10,6 +10,10 @@ export default {
     authors.forEach((author: ExistingAuthor) => {
       storeInitializer.set("ExistingAuthor", author.id, author);
     });
+
+    storeInitializer.set('AuthorDoesNotExistError', 'authorDoesNotExistError', {
+      message: `Sorry...`,
+    });
   },
 
   author: (_, { id }, { mockStore }) => {
@@ -17,10 +21,7 @@ export default {
     const existingAuthor = authorsRef.find((authorRef) => authorRef.$ref.key === id);
 
     if (!existingAuthor) {
-      return {
-        __typename: "AuthorDoesNotExistError",
-        message: "Sorry...",
-      };
+      return { $ref: { key: 'authorDoesNotExistError', typeName: 'AuthorDoesNotExistError' } };
     }
 
     return mockStore.get("ExistingAuthor", id);

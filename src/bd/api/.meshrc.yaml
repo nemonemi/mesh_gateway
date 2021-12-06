@@ -11,6 +11,10 @@ transforms:
       mocks:
         - apply: Query.author
           custom: ./src/resolvers/authors.query.ts#author
+        - apply: Mutation.uploadFile
+          custom: ./src/resolvers/authors.mutation.ts#uploadFile
+        - apply: Mutation.uploadFileWithUnion
+          custom: ./src/resolvers/authors.mutation.ts#uploadFileWithUnion
 
 require:
   - ts-node/register/transpile-only

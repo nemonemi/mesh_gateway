@@ -1,5 +1,5 @@
 import { datatype } from "faker";
-import {ExistingAuthor} from "../../../.mesh";
+import type {ExistingAuthor} from "../../../.mesh";
 
 const types = [
   "IATF 16949",
@@ -74,9 +74,9 @@ export const authors: ExistingAuthor[] = Array.from(Array(100).keys()).map(
   (item, key) => ({
     __typename: "ExistingAuthor",
     id: key === 0 ? "0" : datatype.uuid(),
-    type: type.next().value,
+    // type: type.next().value,
     name: name.next().value,
-    registration_number: registrationNumber.next().value,
-    created_at: createdAt.next().value,
+    // registration_number: registrationNumber.next().value,
+    // created_at: createdAt.next().value,
   })
 );

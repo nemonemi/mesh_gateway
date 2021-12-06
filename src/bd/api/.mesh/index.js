@@ -11,6 +11,7 @@ const graphql_1 = (0, tslib_1.__importDefault)(require("@graphql-mesh/graphql"))
 const transform_mock_1 = (0, tslib_1.__importDefault)(require("@graphql-mesh/transform-mock"));
 const merger_bare_1 = (0, tslib_1.__importDefault)(require("@graphql-mesh/merger-bare"));
 const authors_query_ts_1 = (0, tslib_1.__importDefault)(require("./../../../resolvers/authors.query.ts"));
+const authors_mutation_ts_1 = (0, tslib_1.__importDefault)(require("./../../../resolvers/authors.mutation.ts"));
 const importedModules = {
     // @ts-ignore
     ["ts-node/register/transpile-only"]: transpile_only_1.default,
@@ -23,7 +24,9 @@ const importedModules = {
     // @ts-ignore
     ["@graphql-mesh/merger-bare"]: merger_bare_1.default,
     // @ts-ignore
-    ["../../resolvers/authors.query.ts"]: authors_query_ts_1.default
+    ["../../resolvers/authors.query.ts"]: authors_query_ts_1.default,
+    // @ts-ignore
+    ["../../resolvers/authors.mutation.ts"]: authors_mutation_ts_1.default
 };
 const baseDir = (0, path_1.join)(__dirname, '..');
 const syncImportFn = (moduleId) => {
@@ -50,7 +53,7 @@ const graphql_2 = (0, tslib_1.__importDefault)(require("@graphql-mesh/graphql"))
 const transform_mock_2 = (0, tslib_1.__importDefault)(require("@graphql-mesh/transform-mock"));
 const merger_bare_2 = (0, tslib_1.__importDefault)(require("@graphql-mesh/merger-bare"));
 const utils_2 = require("@graphql-mesh/utils");
-exports.rawConfig = { "sources": [{ "name": "Authors", "handler": { "graphql": { "endpoint": "./src/mock-schema/mock-schema.graphql" } } }], "transforms": [{ "mock": { "if": true, "initializeStore": "./src/resolvers/authors.query.ts#initializeStore", "mocks": [{ "apply": "Query.author", "custom": "./src/resolvers/authors.query.ts#author" }] } }], "require": ["ts-node/register/transpile-only"], "serve": { "port": 4000, "cors": { "origin": "http://localhost:3000" }, "playground": true } };
+exports.rawConfig = { "sources": [{ "name": "Authors", "handler": { "graphql": { "endpoint": "./src/mock-schema/mock-schema.graphql" } } }], "transforms": [{ "mock": { "if": true, "initializeStore": "./src/resolvers/authors.query.ts#initializeStore", "mocks": [{ "apply": "Query.author", "custom": "./src/resolvers/authors.query.ts#author" }, { "apply": "Mutation.uploadFile", "custom": "./src/resolvers/authors.mutation.ts#uploadFile" }, { "apply": "Mutation.uploadFileWithUnion", "custom": "./src/resolvers/authors.mutation.ts#uploadFileWithUnion" }] } }], "require": ["ts-node/register/transpile-only"], "serve": { "port": 4000, "cors": { "origin": "http://localhost:3000" }, "playground": true, "browser": false } };
 async function getMeshOptions() {
     const cache = new cache_inmemory_lru_2.default({
         ...(exports.rawConfig.cache || {}),
